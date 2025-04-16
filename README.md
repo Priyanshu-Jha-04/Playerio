@@ -1,2 +1,2 @@
-# Playerio
- It is a modern Android application built with Kotlin and Jetpack Compose, designed to emulate the core functionalities of YouTube Music. It offers seamless audio streaming, dynamic UI components, and integrates Firebase for backend services.
+🎵 Playerio
+A modern, feature-rich music streaming application inspired by YouTube Music, built entirely with Kotlin and Jetpack Compose. This project demonstrates advanced media playback, dynamic UI design, and seamless integration with Firebase services.
