@@ -29,8 +29,7 @@
 
 ## 📸 Screenshots
 
-*Include screenshots of your app here to showcase its UI and features.*
-
+- Coming Soon
 ---
 
 ## 📦 Installation
