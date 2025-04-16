@@ -48,15 +48,15 @@
 
 3. **ConfigureFirebase:**
 
-   - Create a new project in [Firebase Console](https://console.firbase.gogle.com/).
-   - Add an Android app to you Firebse project.
-   - Download the `google-services.json` file and place it in th `app/ directory.
-   - Enable Firebase Authentication and irestore Database.
+   - Create a new project in [Firebase Console](https://console.firbase.gogle.com/).
+   - Add an Android app to you Firebse project.
+   - Download the `google-services.json` file and place it in th `app/ directory.
+   - Enable Firebase Authentication and irestore Database.
 
 4. **Buil and Run:**
 
-   - Sync the projectwith Gadle files.
-   - Run the app on an emulator r physical device.
+   - Sync the projectwith Gadle files.
+   - Run the app on an emulator r physical device.
 
 ---
 
