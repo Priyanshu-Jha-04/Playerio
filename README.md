@@ -1,5 +1,5 @@
 # 🎧 Playerio
-**Playerio** is a sleek, feature-rich music streaming application designed to emulate the core functionalities of YouTube MusicBuilt entirely with Kotlin and Jetpack Compose, Playerio offers seamless audio playback, dynamic UI components, and integrates Firebase for backend services.
+**Playerio** is a sleek, feature-rich music streaming application designed to emulate the core functionalities of YouTube Music Built entirely with Kotlin and Jetpack Compose, Playerio offers seamless audio playback, dynamic UI components, and integrates Firebase for backend services.
 
 ---
 
