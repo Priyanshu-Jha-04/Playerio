@@ -5,13 +5,13 @@
 
 ## 🚀 Features
 
-- 🧑‍🎤 **Modern UI*: Crafted with Jetpack Compose for a responsive and intuitive user experiece.
-- 🎶 **Media Playbac**: Utilizes ExoPlayer for smooth audio streaing.
-- 🔐 **User Authenticatin**: Secure sign-in and sign-up using Firebase Authentiction.
-- 🎛️ **Playlist Managemnt**: Create, edit, and manage playlists effortessly.
-- 🔍 **Search Functionaity**: Quickly find songs, artists, oralbums.
-- 📥 **Offline Suport**: Download tracks for offline lstening.
-- 🌗 **Dynamic Teming**: Supports light and dark modes with MaterialDesign 3.
+- 🧑‍🎤 **Modern UI*: Crafted with Jetpack Compose for a responsive and intuitive user experiece.
+- 🎶 **Media Playbac**: Utilizes ExoPlayer for smooth audio streaing.
+- 🔐 **User Authenticatin**: Secure sign-in and sign-up using Firebase Authentiction.
+- 🎛️ **Playlist Managemnt**: Create, edit, and manage playlists effortessly.
+- 🔍 **Search Functionaity**: Quickly find songs, artists, oralbums.
+- 📥 **Offline Suport**: Download tracks for offline lstening.
+- 🌗 **Dynamic Teming**: Supports light and dark modes with MaterialDesign 3.
 
 ---
 
