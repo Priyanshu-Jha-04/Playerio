@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "523859044781",
+    "project_id": "playerio-143ec",
+    "storage_bucket": "playerio-143ec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523859044781:android:89665c12b54744882b1924",
+        "android_client_info": {
+          "package_name": "com.example.playerio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI9zF_axGMO-0dzd2iqbRUBMpr2Pkfzqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
