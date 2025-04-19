@@ -7,8 +7,6 @@ plugins {
     id("com.google.gms.google-services")
     id("org.jetbrains.kotlin.kapt")
 
-
-
     //Dagger-Hilt
     id("com.google.dagger.hilt.android")
     id ("dagger.hilt.android.plugin")
@@ -81,13 +79,9 @@ dependencies {
 
     // Dagger-Hilt
 
-    implementation ("com.google.dagger:hilt-android:2.51.1")
-    kapt ("com.google.dagger:hilt-compiler:2.51.1")
-
-    implementation(libs.hilt.android.v2561)
-    kapt(libs.hilt.android.compiler.v2561)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    implementation ("com.google.dagger:hilt-android:2.56.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.56.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.runtime.rxjava2)
@@ -133,8 +127,7 @@ dependencies {
 
 
 // Hilt ViewModel (if using)
-    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+    // kapt ("androidx.hilt:hilt-compiler:1.0.0")
 
 // Room (if using)
     kapt ("androidx.room:room-compiler:2.6.1")
