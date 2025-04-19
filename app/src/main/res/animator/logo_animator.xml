@@ -18,6 +18,6 @@
         android:propertyName="scaleY"
         android:valueType="floatType"
         android:valueFrom="0.0"
-        android:valueTo="0.7" />
+        android:valueTo="0.25" />
 
 </objectAnimator>
