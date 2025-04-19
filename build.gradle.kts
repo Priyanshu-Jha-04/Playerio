@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     kotlin("kapt") version "2.1.20"
 
-    kotlin("jvm") version "1.9.22"
 
     //Firebase
     id("com.google.gms.google-services") version "4.4.2" apply false
@@ -14,7 +13,11 @@ plugins {
 
 }
 buildscript {
+
     dependencies {
+        classpath ("com.android.tools.build:gradle:7.4.2") // Update as needed
+        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")
+        classpath ("com.google.dagger:hilt-android-gradle-plugin:2.56.1")
         classpath(libs.secrets.gradle.plugin)
     }
 }
