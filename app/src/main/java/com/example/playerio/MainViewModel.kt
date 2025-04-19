@@ -9,14 +9,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel: ViewModel() {
+
+@HiltViewModel
+class MainViewModel @Inject constructor(): ViewModel() {
 
     private val _isReady = MutableStateFlow(false)
     val isReady = _isReady.asStateFlow()
 
     init {
         viewModelScope.launch {
-            delay(3000L)
+            delay(4000L)
             _isReady.value = true
         }
     }
