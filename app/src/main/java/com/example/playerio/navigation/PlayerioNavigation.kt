@@ -18,7 +18,7 @@ import com.example.playerio.screens.splash.SplashScreen
 @Composable
 fun PlayerioNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = PlayerioScreens.HomeScreen.name) {
+    NavHost(navController = navController, startDestination = PlayerioScreens.LandingScreen01.name) {
         composable(PlayerioScreens.SplashScreen.name) {
             SplashScreen(navController = navController)
         }
