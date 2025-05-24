@@ -15,7 +15,7 @@ plugins {
 buildscript {
 
     dependencies {
-        classpath ("com.android.tools.build:gradle:7.4.2") // Update as needed
+        classpath ("com.android.tools.build:gradle:8.10.0") // Update as needed
         classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")
         classpath ("com.google.dagger:hilt-android-gradle-plugin:2.56.1")
         classpath(libs.secrets.gradle.plugin)
