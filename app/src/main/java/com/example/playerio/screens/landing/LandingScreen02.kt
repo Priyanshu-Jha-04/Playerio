@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,24 +24,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.playerio.R
+import com.example.playerio.ui.theme.PlayerioTheme
 
 @Composable
 fun LandingScreen02(navController: NavController) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFF41C3D6)
     ) {
-        Image(painter = painterResource(R.drawable.girlnobg), contentDescription = "Girl",
-            modifier = Modifier.size(width = screenWidth, height = screenHeight * 0.55f).zIndex(1.0F).padding(top = screenHeight * 0.15f), alignment = Alignment.TopStart)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -49,14 +54,22 @@ fun LandingScreen02(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
-            Card(
+            Image(
+                painter = painterResource(R.drawable.girlnobg), contentDescription = "Girl",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(screenHeight * 0.45f)
-                    .padding(top = (screenHeight - (screenHeight * 0.45f) - screenWidth - screenWidth * 0.2f)),
-                colors = CardDefaults.cardColors(Color.Transparent),
-                shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)
-            ) {
+                    .size(width = screenWidth, height = screenHeight * 0.55f)
+                    .zIndex(2.0F)
+                    .padding(top = screenHeight * 0.15f), alignment = Alignment.TopStart
+            )
+//            Card(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(screenHeight * 0.45f)
+//                    .padding(top = (screenHeight - (screenHeight * 0.45f) - screenWidth - screenWidth * 0.2f)),
+//                colors = CardDefaults.cardColors(Color.Transparent),
+//                shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)
+//            ) {
+            
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -66,9 +79,19 @@ fun LandingScreen02(navController: NavController) {
                             )
                         )
                 ) {
-
+                    Text(text = buildAnnotatedString {
+                        append("From the ")
+                        withStyle(style = SpanStyle(color = Color.Blue, fontWeight = FontWeight.Bold)) {
+                            append("latest")
+                        }
+                        append(" to the ")
+                        withStyle(style = SpanStyle(color = Color.Blue, fontWeight = FontWeight.Bold)) {
+                            append("greatest")
+                        }
+                        append(" hits, play your favourite tracks now!")
+                    })
                 }
-            }
+//            }
         }
     }
 }
@@ -76,6 +99,6 @@ fun LandingScreen02(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun LandingScreen02Preview() {
-    val navController = rememberNavController()
-    LandingScreen02(navController = navController)
+        val navController = rememberNavController()
+        LandingScreen02(navController = navController)
 }
