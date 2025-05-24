@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.1"
+agp = "8.10.0"
 artifactid = "2.1.20"
 coreSplashscreen = "1.0.1"
 firebaseAuth = "23.2.0"
