@@ -61,15 +61,11 @@ fun LandingScreen02(navController: NavController) {
                     .zIndex(2.0F)
                     .padding(top = screenHeight * 0.15f), alignment = Alignment.TopStart
             )
-//            Card(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(screenHeight * 0.45f)
-//                    .padding(top = (screenHeight - (screenHeight * 0.45f) - screenWidth - screenWidth * 0.2f)),
-//                colors = CardDefaults.cardColors(Color.Transparent),
-//                shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)
-//            ) {
-            
+            Card(modifier = Modifier.fillMaxWidth()
+                .height(screenHeight * 0.45f)
+                .zIndex(3.0F),
+                colors = CardDefaults.cardColors(Color.Transparent),
+                shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -91,7 +87,7 @@ fun LandingScreen02(navController: NavController) {
                         append(" hits, play your favourite tracks now!")
                     })
                 }
-//            }
+            }
         }
     }
 }
@@ -99,6 +95,6 @@ fun LandingScreen02(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun LandingScreen02Preview() {
-        val navController = rememberNavController()
-        LandingScreen02(navController = navController)
+    val navController = rememberNavController()
+    LandingScreen02(navController = navController)
 }
