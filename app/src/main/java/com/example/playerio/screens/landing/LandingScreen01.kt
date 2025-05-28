@@ -54,10 +54,12 @@ fun LandingScreen01(navController: NavController) {
 
 
     Surface(modifier = Modifier.fillMaxSize()) {
-        Surface(modifier = Modifier.fillMaxSize(),
-            color = Color.Transparent) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Color.Transparent
+        ) {
         }
-        Image(  
+        Image(
             painter = painterResource(R.drawable.ellipse2),
             contentDescription = "ellipse",
             modifier = Modifier
@@ -72,7 +74,8 @@ fun LandingScreen01(navController: NavController) {
             modifier = Modifier
                 .height(screenHeight * 0.65f)
                 .width(screenWidth * 0.65f)
-                .zIndex(3.0F).offset(y = -screenHeight * 0.15f),
+                .zIndex(3.0F)
+                .offset(y = -screenHeight * 0.15f),
             alignment = Alignment.Center
         )
         Image(
@@ -100,7 +103,8 @@ fun LandingScreen01(navController: NavController) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(10.dp)
-                    .statusBarsPadding().zIndex(2.0F),
+                    .statusBarsPadding()
+                    .zIndex(2.0F),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Button(
@@ -129,9 +133,11 @@ fun LandingScreen01(navController: NavController) {
                     alignment = Alignment.Center
                 )
 
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .offset(y = (-70).dp)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .offset(y = (-70).dp)
+                ) {
                     Spacer(modifier = Modifier.padding(start = 10.dp))
                     Text(
                         "Playerio",
