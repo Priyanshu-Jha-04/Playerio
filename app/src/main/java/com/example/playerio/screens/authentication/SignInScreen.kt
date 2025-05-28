@@ -1,5 +1,7 @@
 package com.example.playerio.screens.authentication
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +23,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -30,6 +33,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -51,13 +57,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.playerio.R
 import com.example.playerio.navigation.PlayerioScreens
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun SignInScreen(navController: NavController, viewModel: SignInScreenViewModel = viewModel()) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
@@ -67,9 +76,35 @@ fun SignInScreen(navController: NavController) {
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
-    val isSignInEnabled = email.value.isNotBlank() && password.value.length >= 8
+    // val isSignInEnabled = email.value.isNotBlank() && password.value.length >= 8
     val context = LocalContext.current
+    val error by viewModel.error.observeAsState()
+    val isLoading by viewModel.loading.observeAsState(false)
 
+    error?.let { errorMessage ->
+        LaunchedEffect(errorMessage) {
+            val displayMessage = when {
+                errorMessage.contains("password is invalid", ignoreCase = true) ->
+                    "Wrong password. Please try again."
+                errorMessage.contains("no user record", ignoreCase = true) ||
+                        errorMessage.contains("user not found", ignoreCase = true) ->
+                    "No account found with this email."
+                errorMessage.contains("invalid-email", ignoreCase = true) ->
+                    "Invalid email format."
+                errorMessage.contains("too-many-requests", ignoreCase = true) ->
+                    "Too many failed attempts. Please try again later."
+                else -> "Login failed. Please check your credentials."
+            }
+            Toast.makeText(context, displayMessage, Toast.LENGTH_LONG).show()
+            viewModel.clearError()
+        }
+    }
+
+    LaunchedEffect(Firebase.auth.currentUser) {
+        Firebase.auth.currentUser?.let {
+            Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -201,7 +236,28 @@ fun SignInScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(screenHeight * 0.02f))
 
             ElevatedButton(
-                onClick = { navController.navigate(PlayerioScreens.HomeScreen.name) },
+                onClick = {
+                    val emailText = email.value.trim()
+                    val passwordText = password.value.trim()
+
+                    when {
+                        emailText.isBlank() -> {
+                            Toast.makeText(context, "Email cannot be empty", Toast.LENGTH_SHORT).show()
+                        }
+                        passwordText.isBlank() -> {
+                            Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show()
+                        }
+                        passwordText.length < 6 -> {
+                            Toast.makeText(context, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            Log.d("SignIn", "Email: '$emailText', Password length: ${passwordText.length}")
+                            viewModel.signInWithEmailAndPassword(emailText, passwordText) {
+                                navController.navigate(PlayerioScreens.MainScreen.name)
+                            }
+                        }
+                    }
+                },
                 modifier = Modifier
                     .width(screenWidth * 0.69f)
                     .height(50.dp)
@@ -219,16 +275,25 @@ fun SignInScreen(navController: NavController) {
                     containerColor = Color.Transparent
                 ),
                 shape = RoundedCornerShape(25.dp),
-                enabled = isSignInEnabled
+                enabled = !isLoading
             ) {
-                Text(
-                    text = "Sign In",
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(16.dp),
+                        color = Color.White,
+                        strokeWidth = 2.dp
+                    )
+                } else {
+                    Text(
+                        text = "Sign In",
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
             }
+
 
             HorizontalDivider(
                 modifier = Modifier
@@ -267,9 +332,14 @@ fun SignInScreen(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Image(painter = painterResource(R.drawable.googlelogo),
+                        Image(
+                            painter = painterResource(R.drawable.googlelogo),
                             contentDescription = null,
-                            modifier = Modifier.padding(end = 8.dp).height(15.dp).width(15.dp))
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .height(15.dp)
+                                .width(15.dp)
+                        )
                         Text(
                             text = "Google",
                             color = Color.White,
@@ -289,9 +359,14 @@ fun SignInScreen(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Image(painter = painterResource(R.drawable.fblogo),
+                        Image(
+                            painter = painterResource(R.drawable.fblogo),
                             contentDescription = null,
-                            modifier = Modifier.padding(end = 8.dp).height(18.dp).width(18.dp))
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .height(18.dp)
+                                .width(18.dp)
+                        )
                         Text(
                             text = "Facebook",
                             color = Color.White,
