@@ -1,7 +1,11 @@
 package com.example.playerio.navigation
 
+import com.example.playerio.screens.library.LibraryScreen
+import okhttp3.internal.notifyAll
+
 
 enum class PlayerioScreens {
+    AuthCheck,
     SplashScreen,
     LandingScreen01,
     LandingScreen02,
@@ -10,7 +14,9 @@ enum class PlayerioScreens {
     SignInScreen,
     HomeScreen,
     PlayingScreen,
-    SettingsScreen;
+    LibraryScreen,
+    MainScreen,
+    SearchScreen;
 
     companion object {
         fun fromRoute(route: String): PlayerioScreens
@@ -23,7 +29,10 @@ enum class PlayerioScreens {
             SignInScreen.name -> SignInScreen
             HomeScreen.name -> HomeScreen
             PlayingScreen.name -> PlayingScreen
-            SettingsScreen.name -> SettingsScreen
+            LibraryScreen.name -> LibraryScreen
+            SearchScreen.name -> SearchScreen
+            MainScreen.name -> MainScreen
+            AuthCheck.name -> AuthCheck
             null -> HomeScreen
             else -> throw IllegalArgumentException("Route $route is not recognized")
         }
