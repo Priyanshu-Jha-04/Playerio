@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -39,18 +41,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.playerio.R
 import com.example.playerio.navigation.PlayerioScreens
+import com.example.playerio.screens.authentication.SignInScreenViewModel
 import com.google.android.gms.common.util.CollectionUtils.listOf
 import kotlinx.coroutines.delay
 
 @Composable
-fun LandingScreen01(navController: NavController) {
+fun LandingScreen01(navController: NavController, viewModel: SignInScreenViewModel = viewModel() ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    val isUserSignedIn by viewModel.isUserSignedIn.observeAsState()
+
+    LaunchedEffect(isUserSignedIn) {
+        if (isUserSignedIn == true) {
+            navController.navigate(PlayerioScreens.MainScreen.name) {
+                popUpTo(PlayerioScreens.SignInScreen.name) { inclusive = true }
+            }
+        }
+    }
 
 
     Surface(modifier = Modifier.fillMaxSize()) {
