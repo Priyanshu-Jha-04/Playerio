@@ -1,5 +1,7 @@
 package com.example.playerio.screens.authentication
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -57,13 +59,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
-fun SignUpScreen(navController: NavController) {
+fun SignUpScreen(navController: NavController,viewModel: SignInScreenViewModel = viewModel()) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
@@ -73,8 +77,10 @@ fun SignUpScreen(navController: NavController) {
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
-    val isSignInEnabled = email.value.isNotBlank() && password.value.length >= 8
+   // val isSignInEnabled = email.value.isNotBlank() && password.value.length >= 8
     val context = LocalContext.current
+    val error by viewModel.error.observeAsState()
+    val isLoading by viewModel.loading.observeAsState(false)
 
 
     Surface(
@@ -207,7 +213,28 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(screenHeight * 0.02f))
 
             ElevatedButton(
-                onClick = { navController.navigate(PlayerioScreens.HomeScreen.name) },
+                onClick = {
+                    val emailText = email.value.trim()
+                    val passwordText = password.value.trim()
+
+                    when {
+                        emailText.isBlank() -> {
+                            Toast.makeText(context, "Email cannot be empty", Toast.LENGTH_SHORT).show()
+                        }
+                        passwordText.isBlank() -> {
+                            Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show()
+                        }
+                        passwordText.length < 6 -> {
+                            Toast.makeText(context, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            Log.d("SignUp", "Email: '$emailText', Password length: ${passwordText.length}")
+                            viewModel.createUserWithEmailAndPassword(emailText, passwordText) {
+                                navController.navigate(PlayerioScreens.MainScreen.name)
+                            }
+                        }
+                    }
+                },
                 modifier = Modifier
                     .width(screenWidth * 0.69f)
                     .height(50.dp)
@@ -225,16 +252,25 @@ fun SignUpScreen(navController: NavController) {
                     containerColor = Color.Transparent
                 ),
                 shape = RoundedCornerShape(25.dp),
-                enabled = isSignInEnabled
+                enabled = !isLoading
             ) {
-                Text(
-                    text = "Sign Up",
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(16.dp),
+                        color = Color.White,
+                        strokeWidth = 2.dp
+                    )
+                } else {
+                    Text(
+                        text = "Sign Up",
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
             }
+
 
             HorizontalDivider(
                 modifier = Modifier
