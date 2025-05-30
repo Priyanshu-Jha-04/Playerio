@@ -20,6 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaSessionService
 import com.example.playerio.navigation.PlayerioNavigation
 import com.example.playerio.ui.theme.PlayerioTheme
 import com.google.firebase.auth.ktx.auth
@@ -73,6 +76,28 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+class PlaybackService : MediaSessionService() {
+    private var mediaSession: MediaSession? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        val player = ExoPlayer.Builder(this).build()
+        mediaSession = MediaSession.Builder(this, player).build()
+    }
+
+    override fun onDestroy() {
+        mediaSession?.run {
+            player.release()
+            release()
+            mediaSession = null
+        }
+        super.onDestroy()
+    }
+
+    override fun onGetSession(
+        controllerInfo: MediaSession.ControllerInfo
+    ): MediaSession? = mediaSession
+}
 
 @Composable
 fun PlayerioApp() {
@@ -86,24 +111,3 @@ fun PlayerioApp() {
         }
     }
 }
-
-
-//        Firebase.auth.signInAnonymously()
-//            .addOnSuccessListener { result ->
-//                val uid = result.user?.uid ?: return@addOnSuccessListener
-//                val db = Firebase.firestore
-//                val user: MutableMap<String, Any> = HashMap()
-//                user["firsName"] = "Priyanshu"
-//                user["lastName"] = "Jha"
-//
-//                db.collection("users").add(user)
-//                    .addOnSuccessListener {
-//                        Log.d("FB", "User data saved for $uid")
-//                    }
-//                    .addOnFailureListener {
-//                        Log.e("FB", "Write failed: ${it.message}")
-//                    }
-//            }
-//            .addOnFailureListener {
-//                Log.e("FB", "Auth failed: ${it.message}")
-//            }
