@@ -36,10 +36,10 @@ import com.example.playerio.screens.settings.SearchScreen
 fun MainScreen(modifier: Modifier = Modifier) {
 
     val navItemList = listOf(
-        NavItem (label = "Home", icon = Icons.Filled.Home),
-        NavItem (label = "Search", icon = Icons.Filled.Search),
-        NavItem (label = "Now Playing", icon = Icons.Filled.MusicNote),
-        NavItem (label = "Library", icon = Icons.Filled.LibraryMusic)
+        NavItem(label = "Home", icon = Icons.Filled.Home),
+        NavItem(label = "Search", icon = Icons.Filled.Search),
+        NavItem(label = "Now Playing", icon = Icons.Filled.MusicNote),
+        NavItem(label = "Library", icon = Icons.Filled.LibraryMusic)
     )
 
     var selectedIndex by remember {
@@ -49,8 +49,10 @@ fun MainScreen(modifier: Modifier = Modifier) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            NavigationBar(modifier = Modifier,
-                containerColor = Color(0xFF1E1B2E)) {
+            NavigationBar(
+                modifier = Modifier,
+                containerColor = Color(0xFF1E1B2E)
+            ) {
                 navItemList.forEachIndexed { index, navItem ->
                     NavigationBarItem(
                         selected = selectedIndex == index,
@@ -71,9 +73,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
+fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
     val navController = rememberNavController()
-    when(selectedIndex) {
+    when (selectedIndex) {
         0 -> HomeScreen(navController)
         1 -> SearchScreen(navController)
         2 -> PlayingScreen(navController)
