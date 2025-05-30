@@ -86,13 +86,17 @@ fun SignInScreen(navController: NavController, viewModel: SignInScreenViewModel 
             val displayMessage = when {
                 errorMessage.contains("password is invalid", ignoreCase = true) ->
                     "Wrong password. Please try again."
+
                 errorMessage.contains("no user record", ignoreCase = true) ||
                         errorMessage.contains("user not found", ignoreCase = true) ->
                     "No account found with this email."
+
                 errorMessage.contains("invalid-email", ignoreCase = true) ->
                     "Invalid email format."
+
                 errorMessage.contains("too-many-requests", ignoreCase = true) ->
                     "Too many failed attempts. Please try again later."
+
                 else -> "Login failed. Please check your credentials."
             }
             Toast.makeText(context, displayMessage, Toast.LENGTH_LONG).show()
@@ -242,16 +246,28 @@ fun SignInScreen(navController: NavController, viewModel: SignInScreenViewModel 
 
                     when {
                         emailText.isBlank() -> {
-                            Toast.makeText(context, "Email cannot be empty", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Email cannot be empty", Toast.LENGTH_SHORT)
+                                .show()
                         }
+
                         passwordText.isBlank() -> {
-                            Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT)
+                                .show()
                         }
+
                         passwordText.length < 6 -> {
-                            Toast.makeText(context, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Password must be at least 6 characters",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
+
                         else -> {
-                            Log.d("SignIn", "Email: '$emailText', Password length: ${passwordText.length}")
+                            Log.d(
+                                "SignIn",
+                                "Email: '$emailText', Password length: ${passwordText.length}"
+                            )
                             viewModel.signInWithEmailAndPassword(emailText, passwordText) {
                                 navController.navigate(PlayerioScreens.MainScreen.name)
                             }
